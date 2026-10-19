@@ -266,6 +266,12 @@
 
       <form class="contact-form" id="contactForm">
         <h3>Entre em contato:</h3>
+
+        <!-- Chave gratuita gerada em https://web3forms.com (sem senha, só confirma um e-mail) -->
+        <input type="hidden" name="access_key" value="COLE_AQUI_SUA_ACCESS_KEY_DO_WEB3FORMS">
+        <input type="hidden" name="subject" value="Novo contato pelo site KLIT">
+        <input type="checkbox" name="botcheck" class="honeypot" tabindex="-1" autocomplete="off">
+
         <div class="form-group">
           <input type="text" id="name" name="name" placeholder="Seu nome" required>
         </div>
@@ -273,10 +279,10 @@
           <input type="email" id="email" name="email" placeholder="Seu e-mail" required>
         </div>
         <div class="form-group">
-          <textarea id="comment" name="comment" rows="7" placeholder="Sua mensagem" required></textarea>
+          <textarea id="comment" name="message" rows="7" placeholder="Sua mensagem" required></textarea>
         </div>
         <button type="submit" class="btn-submit">Enviar</button>
-        <p class="form-hint">Ao enviar, abriremos seu aplicativo de e-mail com a mensagem preenchida.</p>
+        <p class="form-feedback" id="formFeedback" role="status"></p>
       </form>
     </div>
 

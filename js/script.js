@@ -1,6 +1,3 @@
-// E-mail de destino do formulário de contato — ajuste para o endereço correto da KLIT.
-const CONTACT_EMAIL = "contato@klit.com.br";
-
 document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("year").textContent = new Date().getFullYear();
 
@@ -59,20 +56,42 @@ document.addEventListener("DOMContentLoaded", function () {
     scrollTopBtn.classList.toggle("is-visible", window.scrollY > 400);
   });
 
-  // Formulário de contato (sem backend: abre o cliente de e-mail com os dados preenchidos)
+  // Formulário de contato: envia via Web3Forms (api.web3forms.com), sem backend próprio
+  // e sem abrir app externo — funciona em hospedagem 100% estática (GitHub Pages).
   const form = document.getElementById("contactForm");
+  const feedback = document.getElementById("formFeedback");
+  const submitBtn = form.querySelector(".btn-submit");
+
   form.addEventListener("submit", function (e) {
     e.preventDefault();
-    const name = document.getElementById("name").value.trim();
-    const email = document.getElementById("email").value.trim();
-    const comment = document.getElementById("comment").value.trim();
 
-    const subject = encodeURIComponent("Contato pelo site - " + name);
-    const body = encodeURIComponent(
-      "Nome: " + name + "\nE-mail: " + email + "\n\nMensagem:\n" + comment
-    );
+    feedback.textContent = "Enviando...";
+    feedback.className = "form-feedback";
+    submitBtn.disabled = true;
 
-    window.location.href =
-      "mailto:" + CONTACT_EMAIL + "?subject=" + subject + "&body=" + body;
+    fetch("https://api.web3forms.com/submit", {
+      method: "POST",
+      headers: { Accept: "application/json" },
+      body: new FormData(form),
+    })
+      .then(function (response) {
+        return response.json().catch(function () {
+          throw new Error("Resposta inválida do servidor.");
+        });
+      })
+      .then(function (data) {
+        feedback.textContent = data.success
+          ? "Mensagem enviada com sucesso!"
+          : data.message || "Não foi possível enviar sua mensagem.";
+        feedback.className = "form-feedback " + (data.success ? "is-success" : "is-error");
+        if (data.success) form.reset();
+      })
+      .catch(function () {
+        feedback.textContent = "Não foi possível enviar sua mensagem. Tente novamente mais tarde.";
+        feedback.className = "form-feedback is-error";
+      })
+      .finally(function () {
+        submitBtn.disabled = false;
+      });
   });
 });
