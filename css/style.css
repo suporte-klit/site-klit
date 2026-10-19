@@ -405,7 +405,6 @@ img { max-width: 100%; display: block; }
 .about-intro {
   max-width: 760px;
   margin: 0 auto 56px;
-  text-align: center;
 }
 
 .about-intro h3 {
@@ -415,6 +414,7 @@ img { max-width: 100%; display: block; }
   font-size: 0.95rem;
   font-weight: 700;
   margin: 0 0 16px;
+  text-align: center;
 }
 
 .about-intro p {
@@ -422,6 +422,7 @@ img { max-width: 100%; display: block; }
   font-size: 1.1rem;
   line-height: 1.75;
   margin: 0;
+  text-align: left;
 }
 
 .about-grid {
@@ -437,38 +438,32 @@ img { max-width: 100%; display: block; }
   border-radius: 14px;
   padding: 32px 28px;
   backdrop-filter: blur(6px);
-  transition: transform 0.25s ease, background 0.25s ease;
+  transition: transform 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
 }
 
 .about-card:hover {
   transform: translateY(-6px);
-  background: rgba(255, 255, 255, 0.12);
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-dark) 100%);
+  box-shadow: 0 10px 24px rgba(0,0,0,0.25);
 }
 
-.about-badge {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.12);
-  color: var(--color-accent);
-  font-weight: 700;
-  font-size: 0.85rem;
-  margin-bottom: 18px;
-}
+.about-card:hover h3 { color: var(--color-accent); }
+
+.about-card:hover p,
+.about-card:hover .values-list { color: rgba(255,255,255,0.9); }
 
 .about-card h3 {
   color: #fff;
   font-size: 1.25rem;
   margin: 0 0 12px;
+  transition: color 0.25s ease;
 }
 
 .about-card p {
   color: rgba(255, 255, 255, 0.82);
   line-height: 1.65;
   margin: 0;
+  transition: color 0.25s ease;
 }
 
 .values-list {
